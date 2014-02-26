@@ -14,3 +14,21 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+
+/* Background Task */
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0
+#define CBBeginBackgroundTask() \
+    UIBackgroundTaskIdentifier taskID = UIBackgroundTaskInvalid; \
+    taskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{ \
+    [[UIApplication sharedApplication] endBackgroundTask:taskID]; }];
+
+#define CBEndBackgroundTask() \
+    [[UIApplication sharedApplication] endBackgroundTask:taskID];
+
+#else
+
+#define CBBeginBackgroundTask()
+#define CBEndBackgroundTask()
+
+#endif
